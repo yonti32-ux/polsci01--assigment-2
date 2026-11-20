@@ -2,15 +2,19 @@
 % Colors come from the template; fallbacks are defined here only if missing.
 \providecolor{accent}{HTML}{8B2E2E}
 \providecolor{accentlight}{HTML}{F4E9E1}
-\begin{tikzpicture}[
-  circ/.style={circle, minimum size=34mm, draw=accent, thick, fill=accentlight, fill opacity=0.45, text opacity=1},
-  lab/.style={font=\small\bfseries, align=center}
-]
-  \node[circ] (a) at (90:13mm)  {};
-  \node[circ] (b) at (210:13mm) {};
-  \node[circ] (c) at (330:13mm) {};
-  \node[lab] at (90:24mm)  {במה שפיטה};
-  \node[lab] at (210:25mm) {קרבה\\לבעיה};
-  \node[lab] at (330:25mm) {חזרתיות};
-  \node[font=\footnotesize\bfseries, text=accent, align=center] at (0,0) {מאמר\\הדגל};
+\begin{tikzpicture}[lab/.style={font=\small\bfseries, align=center}]
+  % circles drawn as paths (not nodes) so transparency never touches the text
+  \begin{scope}[fill opacity=0.45]
+    \fill[accentlight] (90:13mm)  circle (17mm);
+    \fill[accentlight] (210:13mm) circle (17mm);
+    \fill[accentlight] (330:13mm) circle (17mm);
+  \end{scope}
+  \draw[accent, thick] (90:13mm)  circle (17mm);
+  \draw[accent, thick] (210:13mm) circle (17mm);
+  \draw[accent, thick] (330:13mm) circle (17mm);
+  \node[lab] at (90:22mm)  {במה שפיטה};
+  \node[lab] at (210:21mm) {קרבה\\לבעיה};
+  \node[lab] at (330:21mm) {חזרתיות};
+  \node[font=\footnotesize\bfseries, text=white, fill=accent, rounded corners=2pt,
+        inner sep=2pt, align=center] at (0,0) {מאמר\\הדגל};
 \end{tikzpicture}
