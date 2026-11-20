@@ -1,0 +1,47 @@
+% ============================================================
+% main.tex -- the "parent" file of the report.
+% It only lists the parts in order. All design is in template.cls.
+% Build: lualatex main -> biber main -> lualatex main -> lualatex main
+% ============================================================
+\documentclass{template}
+\addbibresource{references.bib}
+
+% ---------- Title page details (printed by the template) ----------
+\reporttitle{דת ויציבות מדינית: האם הנצרות החלישה או חיזקה מדינות?}
+           {Religion and State Stability: Did Christianity Weaken or Strengthen States?}
+\reportsubtitle{מחקר השוואתי ממוחשב של רומא המערבית, רומא המזרחית והממלכה הפרנקית (\LR{312--843} לספירה)}
+               {A Computational Comparative Study of Western Rome, Eastern Rome and the Frankish Kingdom (312--843 CE)}
+\reporttype{דוח מכין}{Preliminary Report}
+\institution{אוניברסיטת חיפה}{University of Haifa}
+\course{יישומי \en{Vibe Coding} ו־\en{AI} במדע וביום־יום}
+\semester{סמסטר א׳, תשפ״ז}
+\authors{לירון בן יוסף \and יונתן קליגר}
+\lecturer{ד״ר יורם סגל}
+\submissiondate{24.11.2026}
+
+\begin{document}
+
+% ---------- Front matter: numbered with Hebrew letters (א, ב, ג...) ----------
+\frontmatter
+\makecoverpage                      % title page, no page number
+\input{chapters/00-abstract}        % executive summary + keywords
+\tableofcontents                    % automatic, down to level 3
+\listoffigures
+\listoftables
+\input{chapters/00-abbreviations}   % abbreviations and terms
+
+% ---------- Body: numbered 1-40 ----------
+\mainmatter
+\input{chapters/01-intro}
+\input{chapters/02-problem}
+\input{chapters/03-literature}
+\input{chapters/04-market}
+\input{chapters/05-alternatives}
+% \input{chapters/06-workplan}
+% \input{chapters/07-risks}
+% \input{chapters/08-summary}
+
+% ---------- References ----------
+\printbibliography
+
+\end{document}
