@@ -1,0 +1,20 @@
+% figures/ch2-chain.tex -- from current state to requirements (chapter 2)
+% Colors come from the template; fallbacks are defined here only if missing.
+\providecolor{accent}{HTML}{8B2E2E}
+\providecolor{accentlight}{HTML}{F4E9E1}
+\begin{tikzpicture}[
+  node distance=8mm,
+  box/.style={draw=accent, fill=accentlight, rounded corners=2pt,
+              minimum width=27mm, minimum height=13mm, align=center,
+              font=\small},
+  arrow/.style={-{Stealth[length=2.5mm]}, thick, draw=accent}
+]
+  % RTL reading order: the chain starts on the right
+  \node[box] (now)  {המצב המצוי\\ \footnotesize ויכוח בלי מדידה};
+  \node[box, left=of now]  (gap)  {הפער\\ \footnotesize אין השוואה שיטתית};
+  \node[box, left=of gap]  (q)    {שאלה והשערות\\ \footnotesize \en{H1}, \en{H2}, \en{H0}};
+  \node[box, left=of q]    (req)  {מפרט דרישות\\ \footnotesize ערכי יעד ואימות};
+  \draw[arrow] (now) -- (gap);
+  \draw[arrow] (gap) -- (q);
+  \draw[arrow] (q)   -- (req);
+\end{tikzpicture}
