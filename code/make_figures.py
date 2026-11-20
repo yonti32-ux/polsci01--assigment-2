@@ -290,6 +290,77 @@ def gantt():
     plt.close(fig)
 
 
+# ------------------------------------------------------------------
+# Chapter 7: risk matrix. Probability and severity 1-5, R = P x S.
+# MUST match tab:risks and tab:mitigation in chapters/07-risks.tex.
+# (id, probability, severity, residual probability, residual severity)
+# ------------------------------------------------------------------
+RISKS = [
+    ("R1", 4, 4, 3, 3),   # source bias: texts written by churchmen
+    ("R2", 3, 5, 2, 3),   # AI classification errors
+    ("R3", 4, 3, 2, 2),   # missing data for the 5th-century West
+    ("R4", 3, 4, 2, 2),   # anachronistic measures
+    ("R5", 2, 4, 1, 3),   # expert not available for validation
+    ("R6", 3, 2, 2, 2),   # token costs above budget
+]
+
+
+def risk_matrix():
+    fig, ax = plt.subplots(figsize=(5.6, 4.8))
+    for p in range(1, 6):
+        for sv in range(1, 6):
+            r = p * sv
+            color = "#E8B4B4" if r >= 12 else "#F3E3C3" if r >= 6 else "#DCE8D5"
+            ax.add_patch(plt.Rectangle((sv - 0.5, p - 0.5), 1, 1, color=color,
+                                       ec="white", lw=1.5, zorder=0))
+            # score in the top-left corner of its own cell
+            ax.text(sv - 0.42, p + 0.42, str(r), fontsize=6.5, color="#777777",
+                    ha="left", va="top")
+
+    def spread(points):
+        """Offsets so several markers in one cell sit side by side."""
+        cells = {}
+        for rid, x, y in points:
+            cells.setdefault((x, y), []).append(rid)
+        pos = {}
+        for (x, y), ids in cells.items():
+            n = len(ids)
+            for k, rid in enumerate(ids):
+                pos[rid] = (x + (k - (n - 1) / 2) * 0.32, y)
+        return pos
+
+    before = spread([(rid, sv, p) for rid, p, sv, rp, rs in RISKS])
+    after = spread([(rid, rs, rp) for rid, p, sv, rp, rs in RISKS])
+    for rid, *_ in RISKS:
+        (x0, y0), (x1, y1) = before[rid], after[rid]
+        ax.annotate("", xy=(x1, y1), xytext=(x0, y0),
+                    arrowprops=dict(arrowstyle="-|>", color="#555555", lw=0.9,
+                                    linestyle=(0, (3, 2)), shrinkA=9, shrinkB=7))
+        ax.scatter(x0, y0, s=290, color=ACCENT, zorder=3, edgecolor="white")
+        ax.text(x0, y0, rid, ha="center", va="center", fontsize=7.5,
+                color="white", fontweight="bold", zorder=4)
+        ax.scatter(x1, y1, s=190, facecolor="white", edgecolor="#555555", zorder=3)
+        ax.text(x1, y1, rid, ha="center", va="center", fontsize=6.5,
+                color="#333333", zorder=4)
+    ax.set_xlim(0.5, 5.5); ax.set_ylim(0.5, 5.5)
+    ax.set_xticks(range(1, 6)); ax.set_yticks(range(1, 6))
+    ax.set_xlabel(he("חומרה"))
+    ax.set_ylabel(he("הסתברות"))
+    ax.set_aspect("equal")
+    for side in ax.spines.values():
+        side.set_visible(False)
+    from matplotlib.lines import Line2D
+    ax.legend(handles=[
+        Line2D([], [], marker="o", color="w", markerfacecolor=ACCENT, markersize=10,
+               label=he("לפני ההפחתה")),
+        Line2D([], [], marker="o", color="w", markerfacecolor="white",
+               markeredgecolor="#555555", markersize=9, label=he("אחרי ההפחתה")),
+    ], loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=2, frameon=False, fontsize=8)
+    fig.savefig(FIG / "ch7-risk-matrix.pdf")
+    fig.savefig(FIG / "ch7-risk-matrix.png", dpi=150)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     radar()
     scatter()
@@ -299,4 +370,5 @@ if __name__ == "__main__":
     sensitivity()
     random_weights_check()
     gantt()
+    risk_matrix()
     print("figures written to", FIG)
