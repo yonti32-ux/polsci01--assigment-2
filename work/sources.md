@@ -7,7 +7,7 @@
 
 | סעיף | נושא | מקורות | מפתח ב-bib |
 |---|---|---|---|
-| 3.1 | ההסבר הדתי הקלסי | גיבון; אוגוסטינוס, "עיר האלוהים" | `gibbon_decline`, `augustine_citygod` |
+| 3.1 | ההסבר הדתי הקלאסי | גיבון; אוגוסטינוס, "עיר האלוהים" | `gibbon_decline`, `augustine_citygod` |
 | 3.2 | לחץ חיצוני וקריסה כלכלית | הת'ר; וורד-פרקינס; ויקהאם | `heather2005fall`, `wardperkins2005fall`, `wickham2005framing` |
 | 3.3 | אקלים ומגפות | הרפר | `harper2017fate` |
 | 3.4 | הכנסייה, העושר והאליטה | בראון 2012 ו-1961; בארנס 1995; זלצמן 2002; ווילן 2018 ו-2026 | `brown2012needle`, `brown1961aspects`, `barnes1995statistics`, `salzman2002making`, `whelan2018mirrors`, `whelan2026serving` |
