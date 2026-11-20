@@ -236,6 +236,60 @@ def random_weights_check(n=10000, seed=1):
         print(f"  {k}: wins {100 * v / n:.1f}% of random weightings")
 
 
+# ------------------------------------------------------------------
+# Chapter 6: Gantt chart of the 12-month research plan.
+# MUST match tab:tasks in chapters/06-workplan.tex. Change both together.
+# (id, label, start month, end month, critical path?)
+# ------------------------------------------------------------------
+TASKS = [
+    ("1.1", "רשימת המקורות", 1, 1, False),
+    ("1.2", "הורדת הטקסטים", 1, 2, False),
+    ("1.3", "חלוקה לקטעים ותיוג", 2, 4, True),
+    ("2.1", "ספר הגדרות למדדים", 2, 3, False),
+    ("2.2", "משתני פיקוח", 3, 6, False),
+    ("3.1", "הנחיות לסוכנים", 3, 3, False),
+    ("3.2", "פיילוט ותיקוף", 5, 5, True),
+    ("3.3", "סיווג מלא", 6, 7, True),
+    ("3.4", "הרצה חוזרת", 8, 8, False),
+    ("4.1", "איחוד המאגר", 8, 8, True),
+    ("4.2", "בדיקת ההשערות", 9, 9, True),
+    ("4.3", "ניתוח רגישות", 10, 10, True),
+    ("5.1", "דוח התקדמות", 6, 6, False),
+    ("5.2", "דוח סיום ומאמר", 11, 12, True),
+    ("5.3", "פרסום פתוח", 12, 12, False),
+]
+MILESTONES = [(5, "תיקוף עבר"), (8, "המאגר מוכן"), (12, "פרסום")]
+GREEN = "#3D7A4A"
+
+
+def gantt():
+    fig, ax = plt.subplots(figsize=(6.6, 5.0))
+    n = len(TASKS)
+    for i, (tid, label, a, b, crit) in enumerate(TASKS):
+        ax.barh(i, b - a + 1, left=a - 0.5, height=0.55,
+                color=ACCENT if crit else GREY, edgecolor="white")
+    ax.set_yticks(range(n))
+    ax.set_yticklabels([f"{he(t[1])}  {t[0]}" for t in TASKS], fontsize=8.5)
+    ax.invert_yaxis()
+    for m, label in MILESTONES:
+        ax.axvline(m + 0.5, color=GREEN, linewidth=1, linestyle="--", zorder=0)
+        ax.plot(m + 0.5, -1.0, marker="D", color=GREEN, markersize=8, clip_on=False)
+        ax.text(m + 0.5, -1.7, he(label), ha="center", fontsize=8, color=GREEN)
+    ax.set_xlim(0.5, 12.9)
+    ax.set_ylim(n - 0.4, -2.2)
+    ax.set_xticks(range(1, 13))
+    ax.set_xlabel(he("חודש"))
+    ax.grid(axis="x", color="#E3E3E3", linewidth=0.6)
+    ax.spines[["top", "right"]].set_visible(False)
+    from matplotlib.patches import Patch
+    ax.legend(handles=[Patch(color=ACCENT, label=he("נתיב קריטי")),
+                       Patch(color=GREY, label=he("משימה רגילה"))],
+              loc="lower left", frameon=False, fontsize=8)
+    fig.savefig(FIG / "ch6-gantt.pdf")
+    fig.savefig(FIG / "ch6-gantt.png", dpi=150)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     radar()
     scatter()
@@ -244,4 +298,5 @@ if __name__ == "__main__":
     decision_bars()
     sensitivity()
     random_weights_check()
+    gantt()
     print("figures written to", FIG)

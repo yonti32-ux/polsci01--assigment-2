@@ -1,0 +1,24 @@
+% figures/ch6-wbs.tex -- work breakdown structure: five work packages (chapter 6)
+% Colors come from the template; fallbacks are defined here only if missing.
+\providecolor{accent}{HTML}{8B2E2E}
+\providecolor{accentlight}{HTML}{F4E9E1}
+\begin{tikzpicture}[
+  root/.style={draw=accent, fill=accent, text=white, rounded corners=2pt,
+               font=\small\bfseries, minimum width=40mm, minimum height=9mm, align=center},
+  wp/.style={draw=accent, fill=accentlight, rounded corners=2pt, font=\footnotesize\bfseries,
+             text width=25mm, minimum height=11mm, align=center},
+  task/.style={font=\scriptsize, text width=25mm, align=right, inner sep=1pt},
+  line/.style={draw=accent, thick}
+]
+  \node[root] (r) at (0,0) {המחקר: דת ויציבות מדינית};
+  % RTL: WP1 on the right
+  \foreach \i/\x/\name in {1/62/בניית הקורפוס, 2/31/בניית המאגר, 3/0/ניתוח \en{AI} ותיקוף, 4/-31/ניתוח סטטיסטי, 5/-62/כתיבה ופרסום} {
+    \node[wp] (wp\i) at (\x mm,-20mm) {\en{WP\i}\\ \name};
+    \draw[line] (r.south) -- ++(0,-4mm) -| (wp\i.north);
+  }
+  \node[task, below=2mm of wp1] {1.1 רשימת המקורות\\ 1.2 הורדת הטקסטים\\ 1.3 חלוקה לקטעים ותיוג};
+  \node[task, below=2mm of wp2] {2.1 ספר הגדרות\\ 2.2 משתני פיקוח};
+  \node[task, below=2mm of wp3] {3.1 הנחיות לסוכנים\\ 3.2 פיילוט ותיקוף\\ 3.3 סיווג מלא\\ 3.4 הרצה חוזרת};
+  \node[task, below=2mm of wp4] {4.1 איחוד המאגר\\ 4.2 בדיקת ההשערות\\ 4.3 ניתוח רגישות};
+  \node[task, below=2mm of wp5] {5.1 דוח התקדמות\\ 5.2 דוח סיום ומאמר\\ 5.3 פרסום פתוח};
+\end{tikzpicture}
