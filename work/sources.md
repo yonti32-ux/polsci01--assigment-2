@@ -13,7 +13,7 @@
 | 3.4 | הכנסייה, העושר והאליטה | בראון 2012 ו-1961; בארנס 1995; זלצמן 2002; ווילן 2018 ו-2026 | `brown2012needle`, `brown1961aspects`, `barnes1995statistics`, `salzman2002making`, `whelan2018mirrors`, `whelan2026serving` |
 | 3.5 | למה המזרח שרד | וויליאמס ופריל | `williams1999rome` |
 | 3.6 | הכנסייה והמדינה אצל הפרנקים | ספרים: קוסטמביס, אינס ומקלין; דה יונג; מור; אובריאן. מאמרים שפיטים: פובדה אריאס 2019; בארט ווודהויסן 2016; נלסון 1971 ו-1991 | `costambeys2011carolingian`, `dejong2009penitential`, `moore2011sacred`, `obrien2026rise`, `poveda2019clovis`, `barrett2016remigius`, `nelson1971synods`, `nelson1991bailiffs` |
-| 3.7 | היסטוריה ממוחשבת ו-AI | טורצ'ין 2018 ו-2022 (Seshat); Latin BERT | `turchin2018quantitative`, `turchin2022disentangling`, `bamman2020latinbert` |
+| 3.7 | היסטוריה ממוחשבת ו-AI | טורצ'ין 2018 ו-2022 (Seshat); Ithaca (Nature 2022); סקירת למידת מכונה לשפות עתיקות (2023); Logion (TAPA 2023); Latin BERT | `turchin2018quantitative`, `turchin2022disentangling`, `assael2022ithaca`, `sommerschield2023survey`, `graziosi2023philology`, `bamman2020latinbert` |
 
 ## ממצאים שכדאי לזכור בכתיבה
 
@@ -51,6 +51,8 @@
 ## מה עוד חסר (למחר)
 
 - [x] מאמרים שפיטים על הפרנקים/הקרולינגים – נוספו ארבעה (פובדה אריאס, בארט ווודהויסן, נלסון ×2).
-- [ ] מקור שפיט על ניתוח טקסטים היסטוריים במודלי שפה גדולים (Latin BERT הוא טרום-פרסום, לא שפיט).
+- [x] מקורות שפיטים על AI לטקסטים עתיקים – נוספו שלושה (Ithaca ב-Nature, סקירה ב-Computational Linguistics, Logion ב-TAPA).
+
+**ממצא חשוב ל-AI:** Ithaca לבד שחזר נכון 62% מהטקסטים; היסטוריונים לבד – 25%; היסטוריונים עם Ithaca – 72%. כלומר, אדם + מודל עדיפים על כל אחד לבד. זה הבסיס לדרישת התיקוף האנושי (REQ-AI-01).
 - [ ] לפרק 4: האתרים של Seshat, ORBIS, Pleiades, Perseus, dMGH, DARMC – כתובות ותאריך כניסה.
 - [ ] לפרק 4: מספרי שוק (TAM/SAM/SOM) – רק מדוח אמיתי.

@@ -1,0 +1,16 @@
+% figures/ch3-flagship.tex -- the flagship paper at the intersection of three criteria (chapter 3)
+% Colors come from the template; fallbacks are defined here only if missing.
+\providecolor{accent}{HTML}{8B2E2E}
+\providecolor{accentlight}{HTML}{F4E9E1}
+\begin{tikzpicture}[
+  circ/.style={circle, minimum size=34mm, draw=accent, thick, fill=accentlight, fill opacity=0.45, text opacity=1},
+  lab/.style={font=\small\bfseries, align=center}
+]
+  \node[circ] (a) at (90:13mm)  {};
+  \node[circ] (b) at (210:13mm) {};
+  \node[circ] (c) at (330:13mm) {};
+  \node[lab] at (90:24mm)  {במה שפיטה};
+  \node[lab] at (210:25mm) {קרבה\\לבעיה};
+  \node[lab] at (330:25mm) {חזרתיות};
+  \node[font=\footnotesize\bfseries, text=accent, align=center] at (0,0) {מאמר\\הדגל};
+\end{tikzpicture}

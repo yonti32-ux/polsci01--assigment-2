@@ -9,10 +9,13 @@
 | `\LR{...}` | קטע משמאל לימין – בעיקר טווחי שנים כמו `\LR{1776--1789}`, כדי שלא יתהפכו | 1 |
 | `keybox` (סביבה עם כותרת) | תיבה מודגשת: `\begin{keybox}{כותרת} ... \end{keybox}` | 1 |
 | `\chapter`, `\section`, `\label`, `\ref` | מבנה ומספור רגילים | 1 |
-| `\cite{...}` | הפניה למקור מתוך `references.bib` (biblatex + biber) | 1, 2 |
+| `\cite{...}` | הפניה למקור מתוך `references.bib` (biblatex + biber); גם כמה מפתחות יחד: `\cite{a,b}` | 1, 2, 3 |
 | `booktabs` (`\toprule`, `\midrule`, `\bottomrule`) | קווים בטבלאות. העיצוב הסופי של הטבלאות – בתבנית | 2 |
 | `\multicolumn` | תא שמתפרס על כמה עמודות | 2 |
-| `tikz` + ספריות `positioning`, `arrows.meta` | איורים בקוד (`figures/*.tex`) | 2 |
+| `tikz` + ספריות `positioning`, `arrows.meta` | איורים בקוד (`figures/*.tex`) | 2, 3 |
+| `\checkmark` (חבילת `amssymb`) | סימן ✓ במטריצת הספרות | 3 |
+| `\paragraph{...}` | כותרת פסקה (רמה רביעית, בלי מספור) | 3 |
+| `\subsection*{...}` | תת-סעיף בלי מספור | 2, 3 |
 | צבעים `accent`, `accentlight` | צבע ראשי וצבע רקע בהיר לאיורים. התבנית קובעת אותם; לאיורים יש ערכי ברירת מחדל זמניים | 2 |
 
 
