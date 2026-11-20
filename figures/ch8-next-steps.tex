@@ -1,0 +1,21 @@
+% figures/ch8-next-steps.tex -- three immediate actions after approval (chapter 8)
+% Colors come from the template; fallbacks are defined here only if missing.
+\providecolor{accent}{HTML}{8B2E2E}
+\providecolor{accentlight}{HTML}{F4E9E1}
+\begin{tikzpicture}[
+  node distance=7mm,
+  act/.style={draw=accent, fill=accentlight, rounded corners=2pt, text width=38mm,
+              minimum height=16mm, align=center, font=\footnotesize},
+  num/.style={circle, fill=accent, text=white, font=\small\bfseries, inner sep=2pt},
+  arrow/.style={-{Stealth[length=2.3mm]}, thick, draw=accent}
+]
+  % RTL: step 1 on the right
+  \node[act] (a1) {\textbf{גיוס המומחים}\\ מומחה לתקופה ומומחה גיבוי; קביעת מועד התיקוף};
+  \node[act, left=of a1] (a2) {\textbf{ספר ההגדרות ורשימת המקורות}\\ משימות 1.1 ו־2.1};
+  \node[act, left=of a2] (a3) {\textbf{מיני־פיילוט}\\ 50 קטעים: הערכת דיוק ועלות};
+  \node[num] at (a1.north east) {1};
+  \node[num] at (a2.north east) {2};
+  \node[num] at (a3.north east) {3};
+  \draw[arrow] (a1) -- (a2);
+  \draw[arrow] (a2) -- (a3);
+\end{tikzpicture}
