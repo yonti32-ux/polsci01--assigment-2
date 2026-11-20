@@ -1,0 +1,37 @@
+% figures/ch5-architecture.tex -- research architecture and data flow (chapter 5)
+% Colors come from the template; fallbacks are defined here only if missing.
+\providecolor{accent}{HTML}{8B2E2E}
+\providecolor{accentlight}{HTML}{F4E9E1}
+\begin{tikzpicture}[
+  node distance=5mm,
+  stage/.style={draw=accent, fill=accentlight, rounded corners=2pt,
+               minimum width=62mm, minimum height=10mm, align=center, font=\small},
+  human/.style={stage, fill=accent, text=white, font=\small\bfseries},
+  side/.style={draw=accent, dashed, rounded corners=2pt, align=center,
+               font=\footnotesize, minimum width=34mm, inner sep=3pt},
+  arrow/.style={-{Stealth[length=2.3mm]}, thick, draw=accent}
+]
+  \node[stage]  (src)  {\textbf{מקורות}\\ \footnotesize \en{Perseus}, \en{dMGH}, \en{Seshat}};
+  \node[stage, below=of src]  (prep) {\textbf{הכנת הקורפוס}\\ \footnotesize חלוקה לקטעים, תיוג מקור, מדינה ותאריך};
+  \node[stage, below=of prep] (ai)   {\textbf{סיווג בעזרת מודל שפה}\\ \footnotesize קטגוריות של יחסי כנסייה–מדינה};
+  \node[human, below=of ai]  (exp)  {תיקוף בידי מומחה\\ \footnotesize מדגם של 300 קטעים};
+  \node[stage, below=of exp]  (db)   {\textbf{מאגר הנתונים}\\ \footnotesize מדינה $\times$ מקטע של 25 שנה};
+  \node[stage, below=of db]   (stat) {\textbf{ניתוח סטטיסטי}\\ \footnotesize בדיקת \en{H1}, \en{H2} וניתוח רגישות};
+  \node[stage, below=of stat] (out)  {\textbf{תוצאות ופרסום פתוח}\\ \footnotesize קוד, נתונים ומאמר};
+
+  \draw[arrow] (src) -- (prep);
+  \draw[arrow] (prep) -- (ai);
+  \draw[arrow] (ai) -- (exp);
+  \draw[arrow] (exp) -- node[left, font=\footnotesize] {עומד ביעד} (db);
+  \draw[arrow] (db) -- (stat);
+  \draw[arrow] (stat) -- (out);
+  % feedback loop when validation fails
+  \draw[arrow, dashed] (exp.west) -- ++(-9mm,0) |- node[pos=0.25, left, font=\footnotesize, align=center] {לא עומד\\ ביעד:\\ תיקון} (ai.west);
+
+  % agent committee beside the AI step (on the right in RTL reading)
+  \node[side, right=12mm of ai] (agents) {\textbf{ועדת סוכנים}\\ מסווג\\ מבקר (צוות אדום)\\ בודק נתונים};
+  \draw[arrow, dashed] (agents) -- (ai);
+  % control variables enter the database directly
+  \node[side, right=12mm of db] (ctrl) {\textbf{משתני פיקוח}\\ כלכלה, צבא, אקלים};
+  \draw[arrow, dashed] (ctrl) -- (db);
+\end{tikzpicture}

@@ -135,7 +135,113 @@ def scatter():
     plt.close(fig)
 
 
+# ------------------------------------------------------------------
+# Chapter 5: weighted decision matrix and sensitivity analysis.
+# Weights were fixed BEFORE scoring (see chapter 5). Scores 1-5.
+# ------------------------------------------------------------------
+CRITERIA = ["תוקף מדעי", "יכולת שחזור", "כיסוי המקורות", "עלות", "חדשנות"]
+WEIGHTS = [0.30, 0.20, 0.20, 0.15, 0.15]
+ALTS = {
+    "א: מחקר מקורות קלסי":      [3, 2, 2, 5, 1],
+    "ב: מאגר וקידוד ידני":       [5, 4, 3, 2, 3],
+    "ג: מאגר וניתוח AI עם תיקוף": [4, 5, 5, 3, 5],
+}
+CRIT_COLORS = ["#8B2E2E", "#B5651D", "#C9A227", "#5B7553", "#4A6C8C"]
+
+
+def weighted(scores, weights):
+    return sum(s * w for s, w in zip(scores, weights))
+
+
+def decision_bars():
+    fig, ax = plt.subplots(figsize=(6.4, 3.4))
+    names = list(ALTS)
+    for i, name in enumerate(names):
+        left = 0.0
+        for j, (sc, w) in enumerate(zip(ALTS[name], WEIGHTS)):
+            part = sc * w
+            ax.barh(i, part, left=left, color=CRIT_COLORS[j], edgecolor="white",
+                    height=0.55, label=he(CRITERIA[j]) if i == 0 else None)
+            left += part
+        ax.text(left + 0.06, i, f"{left:.2f}", va="center", fontsize=10,
+                fontweight="bold", color="#222222")
+    ax.set_yticks(range(len(names)))
+    ax.set_yticklabels([he(n) for n in names], fontsize=9)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 5)
+    ax.set_xlabel("Weighted score  (0-5)")
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.25), ncol=5,
+              frameon=False, fontsize=8)
+    fig.savefig(FIG / "ch5-decision.pdf")
+    fig.savefig(FIG / "ch5-decision.png", dpi=150)
+    plt.close(fig)
+
+
+SENS = 0  # criterion to vary: 0 = scientific validity, where C is weakest vs B
+
+
+def sensitivity():
+    """Vary one criterion's weight from 0 to 0.9; the others shrink in proportion."""
+    base_other = [w for k, w in enumerate(WEIGHTS) if k != SENS]
+    total_other = sum(base_other)
+    ws = np.linspace(0, 0.9, 91)
+    fig, ax = plt.subplots(figsize=(6.4, 3.4))
+    styles = ["--", ":", "-"]
+    results = {}
+    for (name, sc), st in zip(ALTS.items(), styles):
+        ys = []
+        for w in ws:
+            weights = [bw * (1 - w) / total_other for bw in base_other]
+            weights.insert(SENS, w)
+            ys.append(weighted(sc, weights))
+        results[name] = ys
+        ours = name.startswith("ג")
+        ax.plot(ws, ys, st, color=ACCENT if ours else GREY,
+                linewidth=2.4 if ours else 1.4, label=he(name))
+    ax.axvline(WEIGHTS[SENS], color="#444444", linewidth=0.8)
+    ax.text(WEIGHTS[SENS] + 0.01, 4.85, he("המשקל שנבחר"), fontsize=8, color="#444444")
+    ax.set_xlabel(he("משקל קריטריון התוקף המדעי"))
+    ax.set_ylabel("Weighted score")
+    ax.set_ylim(1, 5)
+    ax.set_xlim(0, 0.9)
+    ax.grid(color="#DDDDDD", linewidth=0.6)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.legend(frameon=False, fontsize=8, loc="lower left", bbox_to_anchor=(0.0, 0.0))
+    # report where (if anywhere) C stops winning
+    names = list(ALTS)
+    c = results[names[2]]
+    for k, w in enumerate(ws):
+        best_other = max(results[names[0]][k], results[names[1]][k])
+        if c[k] < best_other:
+            print(f"  C loses first at weight {w:.2f}")
+            ax.axvline(w, color=ACCENT, linewidth=0.8, linestyle=":")
+            break
+    else:
+        print("  C wins across the whole range")
+    fig.savefig(FIG / "ch5-sensitivity.pdf")
+    fig.savefig(FIG / "ch5-sensitivity.png", dpi=150)
+    plt.close(fig)
+
+
+def random_weights_check(n=10000, seed=1):
+    """Draw random weights around the chosen ones; how often does each alternative win?"""
+    rng = np.random.default_rng(seed)
+    wins = {k: 0 for k in ALTS}
+    for _ in range(n):
+        w = rng.dirichlet(np.array(WEIGHTS) * 20)
+        best = max(ALTS, key=lambda k: weighted(ALTS[k], w))
+        wins[best] += 1
+    for k, v in wins.items():
+        print(f"  {k}: wins {100 * v / n:.1f}% of random weightings")
+
+
 if __name__ == "__main__":
     radar()
     scatter()
+    for k, v in ALTS.items():
+        print(f"  {k}: {weighted(v, WEIGHTS):.2f}")
+    decision_bars()
+    sensitivity()
+    random_weights_check()
     print("figures written to", FIG)
