@@ -1,0 +1,15 @@
+% figures/ch4-market.tex -- three market layers TAM / SAM / SOM (chapter 4)
+% Colors come from the template; fallbacks are defined here only if missing.
+\providecolor{accent}{HTML}{8B2E2E}
+\providecolor{accentlight}{HTML}{F4E9E1}
+\begin{tikzpicture}[lab/.style={font=\small, align=center}]
+  \fill[accentlight!60] (0,0) circle (36mm);
+  \draw[accent, thick] (0,0) circle (36mm);
+  \fill[accentlight] (0,-9mm) circle (25mm);
+  \draw[accent, thick] (0,-9mm) circle (25mm);
+  \fill[accent!25] (0,-17mm) circle (14mm);
+  \draw[accent, thick] (0,-17mm) circle (14mm);
+  \node[lab] at (0,26mm) {\textbf{\en{TAM}}\\ מדעי הרוח הדיגיטליים};
+  \node[lab] at (0,7mm)  {\textbf{\en{SAM}}\\ חקר העת העתיקה\\ וימי הביניים המוקדמים};
+  \node[lab] at (0,-17mm) {\textbf{\en{SOM}}\\ חוקרי המעבר\\ מרומא לימי הביניים};
+\end{tikzpicture}
