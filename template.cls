@@ -10,6 +10,9 @@
 \RequirePackage{polyglossia}
 \setdefaultlanguage{hebrew}
 \setotherlanguage{english}
+% Ligatures=TeX turns -- into an en-dash and --- into an em-dash in every font,
+% not only the main one (\newfontfamily does not add it by default).
+\defaultfontfeatures{Ligatures=TeX}
 \setmainfont{Arial}
 \newfontfamily\hebrewfont[Script=Hebrew,ItalicFont=david.ttf,ItalicFeatures={FakeSlant=0.15}]{David}
 \newfontfamily\hebrewfontsf[Script=Hebrew]{Arial}
@@ -99,6 +102,9 @@
 \renewcommand{\mainmatter}{\clearpage\@mainmattertrue\pagenumbering{arabic}}
 \pretocmd{\section}{\Needspace{6\baselineskip}}{}{}
 \pretocmd{\subsection}{\Needspace{5\baselineskip}}{}{}
+% Run-in paragraph headings (e.g. "שלוש אבני הדרך.") must not be stranded
+% at the bottom of a page, away from the text or list that follows them.
+\pretocmd{\paragraph}{\Needspace{4\baselineskip}}{}{}
 \newcommand{\reporttitle}[2]{\def\rtHeb{#1}\def\rtEng{#2}}
 \newcommand{\reportsubtitle}[2]{\def\rsHeb{#1}\def\rsEng{#2}}
 \newcommand{\reporttype}[2]{\def\typeHeb{#1}\def\typeEng{#2}}
@@ -144,7 +150,9 @@
 \newcommand{\keywords}[1]{\medskip\noindent\textbf{מילות מפתח:} #1\clearpage}
 \newenvironment{abbreviations}{\chapter*{קיצורים ומונחים}\addcontentsline{toc}{chapter}{קיצורים ומונחים}\small\singlespacing
   \begin{longtable}{@{}p{.19\linewidth}p{.75\linewidth}@{}}}{\end{longtable}\clearpage}
-\newcommand{\abbr}[2]{{\color{secondary}\bfseries #1} & #2\\[5pt]}
+% \leavevmode first: a \color at the very start of a p-cell lands in vertical
+% mode and adds \parskip above the term, pushing it below its meaning.
+\newcommand{\abbr}[2]{\leavevmode{\color{secondary}\bfseries #1} & \leavevmode #2\\[5pt]}
 \AtBeginBibliography{\selectlanguage{english}\small\singlespacing}
 \defbibheading{bibliography}[מקורות]{\chapter*{\texthebrew{#1}}\addcontentsline{toc}{chapter}{#1}}
 \endinput
