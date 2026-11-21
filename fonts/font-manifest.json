@@ -1,0 +1,71 @@
+{
+  "source": "https://github.com/google/fonts/tree/main/ofl",
+  "retrieved": "2026-11-21",
+  "instances": [
+    {
+      "file": "NotoSansHebrew-Regular.ttf",
+      "source_file": "NotoSansHebrew-VF.ttf",
+      "wght": 400,
+      "wdth": 100,
+      "sha256": "e4595e03aa1d55dfde7addf3357cca57aa157be63776bb1c26d5f7dd9aedc34b",
+      "source_sha256": "7ef36a2c3593758cdb622e1bdef4f84523e92fbc3ccc667438dd80ff54c2de88"
+    },
+    {
+      "file": "NotoSansHebrew-Bold.ttf",
+      "source_file": "NotoSansHebrew-VF.ttf",
+      "wght": 700,
+      "wdth": 100,
+      "sha256": "e92dc6b3cd4ac9186981997fd8fdacfa4eed7c55115a158b6749e190d4313d8c",
+      "source_sha256": "7ef36a2c3593758cdb622e1bdef4f84523e92fbc3ccc667438dd80ff54c2de88"
+    },
+    {
+      "file": "NotoSansHebrew-CondensedBold.ttf",
+      "source_file": "NotoSansHebrew-VF.ttf",
+      "wght": 700,
+      "wdth": 75,
+      "sha256": "40f66707c8d50c7d01d70dd3b5aab073b1fe1fb319e884cf314ddb20590f2ecb",
+      "source_sha256": "7ef36a2c3593758cdb622e1bdef4f84523e92fbc3ccc667438dd80ff54c2de88"
+    },
+    {
+      "file": "NotoSans-Regular.ttf",
+      "source_file": "NotoSans-VF.ttf",
+      "wght": 400,
+      "wdth": 100,
+      "sha256": "d8ab07a6a76bf53581d38b6e8d2128d27d297accdacf4df176173fefbffedaf9",
+      "source_sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d"
+    },
+    {
+      "file": "NotoSans-Bold.ttf",
+      "source_file": "NotoSans-VF.ttf",
+      "wght": 700,
+      "wdth": 100,
+      "sha256": "6856b43a9d375c21ee306430b9768578f36ecc2843d7839293e62c3c4d44e031",
+      "source_sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d"
+    },
+    {
+      "file": "NotoSans-CondensedBold.ttf",
+      "source_file": "NotoSans-VF.ttf",
+      "wght": 700,
+      "wdth": 75,
+      "sha256": "24c30f7fed87500938a8fe3026e60bb25ae4cd6fa1c29f6f702d3c63b0f3b897",
+      "source_sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d"
+    },
+    {
+      "file": "NotoSans-Italic.ttf",
+      "source_file": "NotoSans-Italic-VF.ttf",
+      "wght": 400,
+      "wdth": 100,
+      "sha256": "a0c7488a640b4b371adf31704a3e7cb0eac6fd2a187d5f6ef1660cdd500aa7ed",
+      "source_sha256": "58e6e0ebd1931b29a365aa2d3e2ee9a9e831a3af7cf3ad1462d4e72154f0b291"
+    },
+    {
+      "file": "NotoSans-BoldItalic.ttf",
+      "source_file": "NotoSans-Italic-VF.ttf",
+      "wght": 700,
+      "wdth": 100,
+      "sha256": "b811204b51b27d2355fea94d3fe325568895786e5f83265947824dcfd19ecc2a",
+      "source_sha256": "58e6e0ebd1931b29a365aa2d3e2ee9a9e831a3af7cf3ad1462d4e72154f0b291"
+    }
+  ],
+  "tool": "fontTools.varLib.instancer 4.68.0; fully pinned wght and wdth, updateFontNames=True"
+}

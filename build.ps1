@@ -20,7 +20,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Bibliography build failed. See main.blg.' }
     if ($LASTEXITCODE -ne 0) { throw 'LaTeX pass failed. See main.log.' }
 }
 $log = Get-Content -LiteralPath main.log -Raw
-if ($log -match 'There were undefined references|Please \(re\)run Biber|Missing character:|Overfull \\[hv]box|Rerun to get cross-references right') {
+if ($log -match 'Table wider than available line|There were undefined references|Please \(re\)run Biber|Missing character:|Overfull \\[hv]box|Rerun to get cross-references right') {
     throw 'Build has unresolved references, missing glyphs, or overflowing content. See main.log.'
 }
 Write-Host 'Built main.pdf. Inspect every page visually before submission.'

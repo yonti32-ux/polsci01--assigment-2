@@ -8,19 +8,23 @@ Hebrew note: recent matplotlib versions (3.10+) lay out right-to-left text
 correctly by themselves. Older versions draw Hebrew backwards; he() detects
 the version and reverses the label only when needed. Keep Hebrew labels free
 of numbers and brackets; put those in separate English text.
-Font: DejaVu Sans ships with matplotlib and includes Hebrew, so this runs
-the same on every computer.
+Fonts: repository-local Noto Sans Hebrew and Noto Sans. Their OFL licenses
+and static instances are included in fonts/; no system installation is needed.
 """
 from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib import font_manager
 import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 FIG = ROOT / "figures"
 FIG.mkdir(exist_ok=True)
+for font_name in ("NotoSansHebrew-Regular.ttf", "NotoSansHebrew-Bold.ttf",
+                  "NotoSans-Regular.ttf", "NotoSans-Bold.ttf"):
+    font_manager.fontManager.addfont(ROOT / "fonts" / font_name)
 
 OURS = "המחקר המוצע"
 
@@ -31,7 +35,7 @@ GREY = "#8A8A8A"     # existing tools
 LIGHT = "#FCFBF4"
 
 plt.rcParams.update({
-    "font.family": "DejaVu Sans",
+    "font.family": ["Noto Sans Hebrew", "Noto Sans"],
     "font.size": 10,
     "axes.edgecolor": "#444444",
     "axes.linewidth": 0.8,

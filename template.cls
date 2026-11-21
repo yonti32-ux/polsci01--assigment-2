@@ -13,11 +13,20 @@
 % Ligatures=TeX turns -- into an en-dash and --- into an em-dash in every font,
 % not only the main one (\newfontfamily does not add it by default).
 \defaultfontfeatures{Ligatures=TeX}
-\setmainfont{Arial}
-\newfontfamily\hebrewfont[Script=Hebrew,ItalicFont=david.ttf,ItalicFeatures={FakeSlant=0.15}]{David}
-\newfontfamily\hebrewfontsf[Script=Hebrew]{Arial}
-\newfontfamily\hebrewfonttt[Script=Hebrew]{Arial}
-\newfontfamily\englishfont{Arial}
+% OFL fonts are bundled: no system font installation is required.
+\setmainfont{NotoSans-Regular.ttf}[Path=fonts/,BoldFont=NotoSans-Bold.ttf,
+  ItalicFont=NotoSans-Italic.ttf,BoldItalicFont=NotoSans-BoldItalic.ttf]
+\newfontfamily\englishfont{NotoSans-Regular.ttf}[Path=fonts/,BoldFont=NotoSans-Bold.ttf,
+  ItalicFont=NotoSans-Italic.ttf,BoldItalicFont=NotoSans-BoldItalic.ttf]
+% Hebrew emphasis stays upright; there are no simulated italic outlines.
+\newfontfamily\hebrewfont{NotoSansHebrew-Regular.ttf}[Path=fonts/,Script=Hebrew,
+  BoldFont=NotoSansHebrew-Bold.ttf,ItalicFont=NotoSansHebrew-Regular.ttf,
+  BoldItalicFont=NotoSansHebrew-Bold.ttf]
+\newfontfamily\hebrewfontsf{NotoSansHebrew-Regular.ttf}[Path=fonts/,Script=Hebrew,
+  BoldFont=NotoSansHebrew-Bold.ttf]
+\newfontfamily\hebrewfonttt{NotoSansHebrew-Regular.ttf}[Path=fonts/,Script=Hebrew]
+\newfontfamily\headingfont{NotoSansHebrew-CondensedBold.ttf}[Path=fonts/,Script=Hebrew,
+  BoldFont=NotoSansHebrew-CondensedBold.ttf]
 \RequirePackage{amsmath,amssymb,graphicx,booktabs,array}
 \RequirePackage[dvipsnames]{xcolor}
 \definecolor{accent}{HTML}{820000}
@@ -28,7 +37,7 @@
 \colorlet{muted}{ink!65}
 \RequirePackage{tikz}
 \usetikzlibrary{positioning,arrows.meta,calc}
-\RequirePackage{adjustbox,etoolbox,setspace,needspace,longtable}
+\RequirePackage{etoolbox,setspace,needspace,longtable}
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{fancyhdr}
 \RequirePackage[backend=biber,style=numeric,sorting=none,maxbibnames=6,language=english]{biblatex}
@@ -40,6 +49,12 @@
 \raggedbottom
 % Keep pages containing only figures/tables aligned with the text area.
 \setlength{\@fptop}{0pt}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
 \clubpenalty=10000
 \widowpenalty=10000
 \displaywidowpenalty=10000
@@ -60,34 +75,42 @@
 % Isolate inline English as one directional unit. Long terms in narrow table
 % cells may wrap inside an English paragraph rather than crossing cell borders.
 \newsavebox{\template@englishbox}
-\newcommand{\en}[1]{\leavevmode
+\newcommand{\en}[1]{\leavevmode%
   \sbox{\template@englishbox}{\textenglish{#1}}%
   \ifdim\wd\template@englishbox>\linewidth
     \parbox[t]{\linewidth}{\selectlanguage{english}\raggedright #1}%
   \else\usebox{\template@englishbox}\fi}
 \pdfstringdefDisableCommands{\def\en#1{#1}\def\LR#1{#1}}
 \providecommand{\LR}[1]{\textenglish{#1}}
-\BeforeBeginEnvironment{tabular}{\begin{adjustbox}{max width=\linewidth}}
-\AfterEndEnvironment{tabular}{\end{adjustbox}}
+% Measure tables without shrinking their text. Wide tables must be fixed
+% in their chapter source, and build.ps1 treats this warning as an error.
+\newsavebox{\template@tablebox}
+\BeforeBeginEnvironment{tabular}{\begin{lrbox}{\template@tablebox}}
+\AfterEndEnvironment{tabular}{\end{lrbox}%
+  \ifdim\wd\template@tablebox>\linewidth
+    \ClassWarning{template}{Table wider than available line: \the\wd\template@tablebox\space > \the\linewidth. Fix source column widths}%
+  \fi
+  \usebox{\template@tablebox}}
 \appto\@arrayparboxrestore{\raggedleft\arraybackslash}
 \def\@makechapterhead#1{\vspace*{5pt}{\parindent\z@\raggedright\normalfont
   \ifnum\c@secnumdepth>\m@ne\if@mainmatter
   {\large\color{accent}\bfseries\@chapapp\space\thechapter\par}\vskip8pt\fi\fi
-  \interlinepenalty\@M\huge\bfseries\color{accent} #1\par\nobreak\vskip22pt}}
+  \interlinepenalty\@M\headingfont\huge\bfseries\color{accent} #1\par\nobreak\vskip22pt}}
 \def\@makeschapterhead#1{\vspace*{5pt}{\parindent\z@\raggedright\normalfont
-  \interlinepenalty\@M\huge\bfseries\color{accent} #1\par\nobreak\vskip22pt}}
+  \interlinepenalty\@M\headingfont\huge\bfseries\color{accent} #1\par\nobreak\vskip22pt}}
 \renewcommand\section{\@startsection{section}{1}{\z@}%
   {-3.5ex plus -1ex minus -.2ex}{2.3ex plus .2ex}%
-  {\normalfont\Large\bfseries\color{secondary}}}
+  {\normalfont\headingfont\Large\bfseries\color{secondary}}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
   {-3.25ex plus -1ex minus -.2ex}{1.5ex plus .2ex}%
-  {\normalfont\large\bfseries\color{accent}}}
+  {\normalfont\headingfont\large\bfseries\color{accent}}}
 \AtBeginEnvironment{tikzpicture}{\selectlanguage{english}}
 \tikzset{every node/.append style={execute at begin node=\selectlanguage{hebrew}}}
 \newtcolorbox{keybox}[1]{enhanced,colback=cream,colframe=secondary,
   colbacktitle=secondary,coltitle=cream,
   boxrule=0.5pt,arc=1mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
   title={\texthebrew{#1}},fonttitle=\bfseries,
+  fontupper=\small\setstretch{1.15},
   before upper={\selectlanguage{hebrew}},before skip=10pt,after skip=10pt}
 \pagestyle{fancy}
 \fancyhf{}
@@ -127,7 +150,7 @@
   {\large\instHeb\par}\textenglish{\instEng}\par
   \vspace{8mm}{\courseText\par}\semesterText\par
   \vspace{10mm}
-  {\setstretch{1.1}\color{accent}\Huge\bfseries\rtHeb\par}
+  {\setstretch{1.1}\color{accent}\headingfont\Huge\bfseries\rtHeb\par}
   \vspace{5mm}{\large\textenglish{\rtEng}\par}
   \vspace{6mm}{\setstretch{1.15}\large\rsHeb\par}
   \vspace{3mm}{\small\textenglish{\rsEng}\par}
