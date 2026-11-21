@@ -25,9 +25,10 @@ FIG.mkdir(exist_ok=True)
 OURS = "המחקר המוצע"
 
 # One palette for the whole report. Change it here (and in template.cls).
-ACCENT = "#8B2E2E"   # deep Roman red: our solution
+ACCENT = "#820000"   # deep Roman red: our solution
+SECONDARY = "#330F53"
 GREY = "#8A8A8A"     # existing tools
-LIGHT = "#F4E9E1"
+LIGHT = "#FCFBF4"
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans",
@@ -146,7 +147,7 @@ ALTS = {
     "ב: מאגר וקידוד ידני":       [5, 4, 3, 2, 3],
     "ג: מאגר וניתוח AI עם תיקוף": [4, 5, 5, 3, 5],
 }
-CRIT_COLORS = ["#8B2E2E", "#B5651D", "#C9A227", "#5B7553", "#4A6C8C"]
+CRIT_COLORS = [ACCENT, SECONDARY, "#A97A4C", "#5B7553", "#4A6C8C"]
 
 
 def weighted(scores, weights):
